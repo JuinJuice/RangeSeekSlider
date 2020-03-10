@@ -205,12 +205,22 @@ import UIKit
     /// Handle diameter (default 16.0)
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
-            leftHandle.cornerRadius = handleDiameter / 2.0
-            rightHandle.cornerRadius = handleDiameter / 2.0
-            leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
-            rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+            if disableRange {
+                leftHandle.cornerRadius = handleDiameter / 2.0
+                rightHandle.cornerRadius = handleDiameter / 2.0
+                leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleHeight)
+                rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleHeight)
+            } else {
+                handleHeight = handleDiameter
+                leftHandle.cornerRadius = handleDiameter / 2.0
+                rightHandle.cornerRadius = handleDiameter / 2.0
+                leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+                rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+            }
         }
     }
+    
+    @IBInspectable open var handleHeight: CGFloat = 20
 
     /// Selected handle diameter multiplier (default 1.7)
     @IBInspectable open var selectedHandleDiameterMultiplier: CGFloat = 1.7
@@ -635,9 +645,9 @@ import UIKit
 
     private func updateFixedLabelPositions() {
         minLabel.position = CGPoint(x: xPositionAlongLine(for: minValue),
-                                    y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleHeight / 2.0) - labelPadding)
         maxLabel.position = CGPoint(x: xPositionAlongLine(for: maxValue),
-                                    y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleHeight / 2.0) - labelPadding)
         if minLabel.frame.minX < 0.0 {
             minLabel.frame.origin.x = 0.0
         }
