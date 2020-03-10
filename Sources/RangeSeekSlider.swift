@@ -533,7 +533,7 @@ import UIKit
             sliderLineBetweenHandles.backgroundColor = initialColor
             sliderLine.backgroundColor = initialColor
 
-            let color: CGColor = (leftHandleImage == nil && rightHandleImage == nil && handleImage == nil) ? initialColor : UIColor.clear.cgColor
+            let color: CGColor = (leftHandleImage == nil && rightHandleImage == nil) || handleImage == nil ? initialColor : UIColor.clear.cgColor
             leftHandle.backgroundColor = color
             leftHandle.borderColor = color
             rightHandle.backgroundColor = color
@@ -546,7 +546,7 @@ import UIKit
             sliderLine.backgroundColor = tintCGColor
 
             let color: CGColor
-            if let _ = leftHandleImage, let _ = rightHandleImage, let _ = handleImage {
+            if (leftHandleImage != nil && rightHandleImage != nil) || handleImage != nil {
                 color = UIColor.clear.cgColor
             } else {
                 color = handleColor?.cgColor ?? tintCGColor
