@@ -173,7 +173,35 @@ import UIKit
             rightHandle.contents = image.cgImage
         }
     }
+    
+    @IBInspectable open var leftHandleImage: UIImage? {
+        didSet {
+            guard let image = leftHandleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
+            leftHandle.frame = handleFrame
+            leftHandle.contents = image.cgImage
+        }
+    }
 
+    @IBInspectable open var rightHandleImage: UIImage? {
+        didSet {
+            guard let image = rightHandleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
+            rightHandle.frame = handleFrame
+            rightHandle.contents = image.cgImage
+        }
+    }
+    
     /// Handle diameter (default 16.0)
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
@@ -505,7 +533,7 @@ import UIKit
             sliderLineBetweenHandles.backgroundColor = initialColor
             sliderLine.backgroundColor = initialColor
 
-            let color: CGColor = (handleImage == nil) ? initialColor : UIColor.clear.cgColor
+            let color: CGColor = (leftHandleImage == nil && rightHandleImage == nil && handleImage == nil) ? initialColor : UIColor.clear.cgColor
             leftHandle.backgroundColor = color
             leftHandle.borderColor = color
             rightHandle.backgroundColor = color
@@ -518,7 +546,7 @@ import UIKit
             sliderLine.backgroundColor = tintCGColor
 
             let color: CGColor
-            if let _ = handleImage {
+            if let _ = leftHandleImage, let _ = rightHandleImage, let _ = handleImage {
                 color = UIColor.clear.cgColor
             } else {
                 color = handleColor?.cgColor ?? tintCGColor
